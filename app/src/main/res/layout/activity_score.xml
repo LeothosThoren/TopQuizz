@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/activity_score_result1_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="First score"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/activity_score_result2_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Second score"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/activity_score_result3_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Third score"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/activity_score_result4_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Fourth score"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/activity_score_result5_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:text="Fifth score"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_score_sortName_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="Trier par prénom"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/activity_score_sortScore_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:text="Trier par scores"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
