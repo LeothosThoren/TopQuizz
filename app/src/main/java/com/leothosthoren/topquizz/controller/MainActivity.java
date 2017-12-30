@@ -49,17 +49,17 @@ public class MainActivity extends AppCompatActivity {
         mPlayButton = (Button) findViewById(R.id.activity_main_play_btn);
         mScoreButton = (Button) findViewById(R.id.activity_main_score_btn);
         mQuitButton = (Button) findViewById(R.id.activity_main_quit_btn);
+
         /*
         * Button is not valid at start*/
-
-
         mScoreButton.setVisibility(View.INVISIBLE);
-        /*
-        * This method check if user changer is Edit text*/
+
+        /*this method check if user changer is Edit text*/
         mNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mPlayButton.setEnabled(false);
+
             }
 
             @Override
@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                         // The user just clicked
                         Intent gameActivity = new Intent(MainActivity.this, GameActivity.class);
                         startActivityForResult(gameActivity, GAME_ACTIVITY_ID);
-
                     }
                 });
 
@@ -94,16 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                //Handle the closure of the application with the quit button
-                mQuitButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //If you want to quit click here all activity will finish and don't run in background
-                        endApp();
-                    }
-                });
             }
-
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -111,8 +101,21 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        //Handle the closure of the application with the quit button
+        mQuitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //If you want to quit click here all activity will finish and don't run in background
+                endApp();
+            }
+        });
     }
 
+    /*
+    * The method @endApp allow the player to stop the application
+    * Two options :
+    * Yes the application is killed it does not run in background
+    * No the application resume*/
     private void endApp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -152,6 +155,9 @@ public class MainActivity extends AppCompatActivity {
             int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
             //Stock the score in shared preferences
             mPreferences.edit().putInt(PREF_KEY_SCORE, score).apply();
+            /**When a round of game is played in mainActivity we can see the score button*
+             *And the methods greetUser() is used here just after the game result
+             */
             mScoreButton.setVisibility(View.VISIBLE);
             greetUser();
         }
