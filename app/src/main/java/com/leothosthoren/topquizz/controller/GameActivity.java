@@ -50,7 +50,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mScore = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
             mNumberOfQuestions = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
         } else {
-            mNumberOfQuestions = 6;
+            mNumberOfQuestions = 3;
             mScore = 0;
         }
 
@@ -91,10 +91,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         int indexResponse = (int) view.getTag();
 
         if (indexResponse == mCurrentQuestion.getAnswerIndex()) {
-            Toast.makeText(this, "Bonne réponse !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bonne réponse ;)", Toast.LENGTH_SHORT).show();
             mScore++;
         } else
-            Toast.makeText(this, "Mauvaise réponse.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Mauvaise réponse :(", Toast.LENGTH_SHORT).show();
 
         //The button question are disable 2 seconds until the toast text is not disapear
         mEnableTouchEvents = false;
@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     displayQuestion(mCurrentQuestion);
                 }
             }
-        }, 2100); //Its the same time in millis of LENGTH_SHORT
+        }, 2000); //Its the same time in millis of LENGTH_SHORT
     }
 
     //Methods who deal with the user and the screen

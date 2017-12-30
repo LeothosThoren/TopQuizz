@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mPlayButton.setEnabled(false);
-
             }
 
             @Override
@@ -101,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         //Handle the closure of the application with the quit button
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
         if (null != firstname) {
             int score = mPreferences.getInt(PREF_KEY_SCORE, 0);
 
-            String fulltext = "Tu es de retour, " + firstname
+            String fulltext = "Bon retour parmi nous, " + firstname
                     + "!\nTon dernier score était de " + score
-                    + ", fera-tu mieux la prochaine fois?";
+                    + ", feras-tu mieux la prochaine fois ?";
             mGreetingText.setText(fulltext);
             mNameInput.setText(firstname);
             mNameInput.setSelection(firstname.length());
