@@ -2,6 +2,7 @@ package com.leothosthoren.topquizz.controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -50,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mScore = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
             mNumberOfQuestions = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
         } else {
-            mNumberOfQuestions = 3;
+            mNumberOfQuestions = 4;
             mScore = 0;
         }
 
@@ -87,8 +88,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(final View view) {
         int indexResponse = (int) view.getTag();
+        //When the button is touched, it changes color
+        view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         if (indexResponse == mCurrentQuestion.getAnswerIndex()) {
             Toast.makeText(this, "Bonne réponse ;)", Toast.LENGTH_SHORT).show();
@@ -96,7 +99,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else
             Toast.makeText(this, "Mauvaise réponse :(", Toast.LENGTH_SHORT).show();
 
-        //The button question are disable 2 seconds until the toast text is not disapear
+        //The button question are disable 2 seconds until the toast text has not disapeared
         mEnableTouchEvents = false;
 
         new Handler().postDelayed(new Runnable() {
@@ -108,6 +111,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     endGame();
                     //Else display an another question
                 } else {
+                    //During displaying question the button go back to white
+                    view.setBackgroundColor(0xFFFFFFFF);
                     mCurrentQuestion = mQuestionBank.getQuestion();
                     displayQuestion(mCurrentQuestion);
                 }
@@ -153,7 +158,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Question question1 = new Question("Combien d'Oscar le film Titanic a-t-il remporté ?",
                 Arrays.asList("10", "11", "12", "13"), 1);
         Question question2 = new Question("A partir de quel cactus la Tequila est-elle fabriquée ?",
-                Arrays.asList("L'agave", "L'ouzo", "Le paprika", "Le pisang"), 0);
+                Arrays.asList("L' agave", "L' ouzo", "Le paprika", "Le pisang"), 0);
         Question question3 = new Question("Quel est le pays d'origine du cocktail, le Mojito ?",
                 Arrays.asList("Mexique", "Honduras", "Brésil", "Cuba"), 3);
         Question question4 = new Question("Quelle est le compoosant principal du verre ?",
@@ -177,9 +182,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Question question13 = new Question("Quel était le nom du petit dragon dans le film Mulan ?",
                 Arrays.asList("Honshu", "Kyushu", "Mushu", "Royco"), 2);
         Question question14 = new Question("Quelle est le nom de l'actrice principale d'Alien ?",
-                Arrays.asList("Segourney Weaver", "Segourney Beaver", "Segourney Meaver", "Segourney Ueaver"), 0);
+                Arrays.asList("Sigourney Weaver", "Sigourney Beaver", "Sigourney Meaver", "Sigourney Ueaver"), 0);
         Question question15 = new Question("Quelle était la profession de Popeye ?",
-                Arrays.asList("Militaire", "Cuisinier", "Marin", "Pêcheur"), 3);
+                Arrays.asList("Militaire", "Cuisinier", "Marin", "Pêcheur"), 2);
+        Question question16 = new Question("A quel écrivain doit-on le personnage de Boule-de-Suif ?",
+                Arrays.asList("Charles Baudelaires", "Guy de Maupassant", "Alexandre Dumas", "Albert Camus"), 1);
+        Question question17 = new Question("De quel pays Tirana est-elle la capitale ?",
+                Arrays.asList("L' Ouzbékistan", "La Biélorussie", "L' Albanie", "Le Kirghistan"), 2);
+        Question question18 = new Question("De quel groupe Jim Morrison était-il le chanteur ?",
+                Arrays.asList("The Cardigans", "The Beattles", "The Who", "The Doors"), 3);
+        Question question19 = new Question("Dans quelle ville française se trouve la Cité de l'espace ?",
+                Arrays.asList("Poithier", "Toulouse", "Lyon", "Nantes"), 1);
+        Question question20 = new Question("En Inde, quels individus \"hors caste\" sont considérés comme impurs ?",
+                Arrays.asList("Les puants", "Les parias", "Les sales", "Les intouchables"), 3);
+        Question question21 = new Question("Que tient la statue de la Liberté dans sa main droite ?",
+                Arrays.asList("Un livre", "Un sac", "Un flambeau", "Un étendard"), 2);
 
 
         return new QuestionBank(Arrays.asList(question1,
@@ -196,8 +213,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 question12,
                 question13,
                 question14,
-                question15));
+                question15,
+                question16,
+                question17,
+                question18,
+                question19,
+                question20,
+                question21));
     }
+
 
     @Override
     protected void onStart() {

@@ -1,54 +1,60 @@
 package com.leothosthoren.topquizz.controller;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.leothosthoren.topquizz.R;
-import com.leothosthoren.topquizz.model.User;
+
+import static com.leothosthoren.topquizz.controller.MainActivity.GAME_ACTIVITY_ID;
+import static com.leothosthoren.topquizz.controller.MainActivity.PREF_KEY_SCORE;
 
 public class ScoreActivity extends AppCompatActivity {
 
     private TextView mFstScore;
-    private TextView mScdScore;
-    private TextView mThdScore;
-    private TextView mFothScore;
-    private TextView mFthScore;
+    private String mName;
+    private int mScore;
     private Button mBtnName;
     private Button mBtnScore;
-    private User mNameUser;
-    private int mScore;
+    private SharedPreferences mSharedPreferences;
+    private String scoreInput;
 
-    public static final String PREF_KEY_SCORE = "PKS";
-    public static final String PREF_KEY_FIRSTNAME = "PKF";
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
-        mFstScore = findViewById(R.id.activity_score_result1_txt);
-        mScdScore = findViewById(R.id.activity_score_result2_txt);
-        mThdScore = findViewById(R.id.activity_score_result3_txt);
-        mFothScore = findViewById(R.id.activity_score_result4_txt);
-        mFthScore = findViewById(R.id.activity_score_result5_txt);
+        mSharedPreferences = getPreferences(MODE_PRIVATE);
 
+        mFstScore = findViewById(R.id.activity_score_result1_txt);
         mBtnName = findViewById(R.id.activity_score_sortName_btn);
         mBtnScore = findViewById(R.id.activity_score_sortScore_btn);
 
-
         //Find how to pick and store score and name
-        Intent intent = new Intent(ScoreActivity.this, MainActivity.class);
-        String str = intent.getStringExtra(PREF_KEY_FIRSTNAME);
+//        mName = mSharedPreferences.getString(PREF_KEY_FIRSTNAME, null);
+        mScore = mSharedPreferences.getInt(PREF_KEY_SCORE, 0);
 
-        mFstScore.setText("Nom du joueur "+str);
-
+        scoreInput = "1st - " + mName + " " + mScore + " points";
+        mFstScore.setText(scoreInput);
     }
 
     //Methods
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (GAME_ACTIVITY_ID == requestCode && RESULT_OK == resultCode) {
+            //Fetch the score from the Intent
+            int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
+            String name = data.getStringExtra(MainActivity.PREF_KEY_FIRSTNAME);
+            //Stock the score in shared preferences
+            mSharedPreferences.edit().putInt(PREF_KEY_SCORE, score).apply();
+//            mSharedPreferences.edit().putString(PREF_KEY_FIRSTNAME, name).apply();
+        }
+    }
 }
 // Cut the problem :
 //First we need to access the score and the name information

@@ -17,12 +17,15 @@ import android.widget.TextView;
 import com.leothosthoren.topquizz.R;
 import com.leothosthoren.topquizz.model.User;
 
+import static com.leothosthoren.topquizz.controller.GameActivity.BUNDLE_EXTRA_SCORE;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int GAME_ACTIVITY_ID = 12;
     public static final int SCORE_ACTIVITY_ID = 24;
     public static final String PREF_KEY_SCORE = "PKS";
     public static final String PREF_KEY_FIRSTNAME = "PKF";
+    public static final String BUNDLE_EXTRA_NAME = "BEN";
     private TextView mGreetingText;
     private EditText mNameInput;
     private Button mPlayButton;
@@ -87,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         //When user click on score button
+
+                        String firstname = mNameInput.getText().toString();
+                        mUser.setFirstName(firstname);
+                        //Stock the firstname (user text input) in the shared preferences
+                        mPreferences.edit().putString(PREF_KEY_FIRSTNAME, mUser.getFirstName()).apply();
+
                         Intent scoreActivity = new Intent(MainActivity.this, ScoreActivity.class);
                         startActivity(scoreActivity);
                     }
@@ -114,13 +123,12 @@ public class MainActivity extends AppCompatActivity {
     /*
     * The method @endApp allow the player to stop the application
     * Two options :
-    * Yes the application is killed it does not run in background
-    * No the application resume*/
+    * Yes: the application is killed it does not run in background
+    * No: the application resume*/
     private void endApp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Quitter")
-                .setMessage("Voulez-vous quitter le jeu ?")
+        builder.setMessage("Voulez-vous quitter le jeu ?")
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -152,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (GAME_ACTIVITY_ID == requestCode && RESULT_OK == resultCode) {
             //Fetch the score from the Intent
-            int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
+            int score = data.getIntExtra(BUNDLE_EXTRA_SCORE, 0);
             //Stock the score in shared preferences
             mPreferences.edit().putInt(PREF_KEY_SCORE, score).apply();
             /**When a round of game is played in mainActivity we can see the score button*
