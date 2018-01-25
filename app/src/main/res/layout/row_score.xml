@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#AAA"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/row_index"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="one"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        tools:background="#fff" />
+
+    <TextView
+        android:id="@+id/row_pseudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/row_index"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/row_index"
+        android:layout_toRightOf="@+id/row_index"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="Pseudo" />
+
+    <TextView
+        android:id="@+id/row_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/row_pseudo"
+        android:layout_alignStart="@+id/row_pseudo"
+        android:layout_below="@+id/row_pseudo"
+        android:textColor="@android:color/black"
+        tools:text="My score" />
+
+</RelativeLayout>
