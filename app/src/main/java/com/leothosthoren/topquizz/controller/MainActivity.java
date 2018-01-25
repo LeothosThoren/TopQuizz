@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("MainActivity::onCreate");
-
         /*
          *Connector between view and controller
          */
@@ -90,14 +88,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         //When user click on score button
-
-                        String firstname = mNameInput.getText().toString();
-                        mUser.setFirstName(firstname);
-                        //Stock the firstname (user text input) in the shared preferences
                         mPreferences.edit().putString(PREF_KEY_FIRSTNAME, mUser.getFirstName()).apply();
 
                         Intent scoreActivity = new Intent(MainActivity.this, ScoreActivity.class);
-                        startActivity(scoreActivity);
+                        startActivityForResult(scoreActivity, SCORE_ACTIVITY_ID);
                     }
                 });
 
@@ -128,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
     private void endApp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setMessage("Voulez-vous quitter le jeu ?")
+        builder.setTitle("Quitter le jeu")
+                .setMessage("Êtes-vous sûr ?")
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -188,40 +183,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        System.out.println("MainActivity::onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        System.out.println("MainActivity::onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        System.out.println("MainActivity::onPause");
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        System.out.println("MainActivity::onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        System.out.println("MainActivity::onDestroy");
-    }
 }

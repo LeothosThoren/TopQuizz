@@ -1,26 +1,34 @@
 package com.leothosthoren.topquizz.controller;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.leothosthoren.topquizz.R;
+import com.leothosthoren.topquizz.model.ItemRowScore;
+import com.leothosthoren.topquizz.model.User;
+import com.leothosthoren.topquizz.view.ScoreAdapter;
 
-import static com.leothosthoren.topquizz.controller.MainActivity.GAME_ACTIVITY_ID;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.leothosthoren.topquizz.controller.MainActivity.PREF_KEY_FIRSTNAME;
 import static com.leothosthoren.topquizz.controller.MainActivity.PREF_KEY_SCORE;
 
 public class ScoreActivity extends AppCompatActivity {
 
+    public User mUser;
     private TextView mFstScore;
     private String mName;
     private int mScore;
-    private Button mBtnName;
-    private Button mBtnScore;
-    private SharedPreferences mSharedPreferences;
+    private ImageButton mBtnName;
+    private ImageButton mBtnScore;
+    private SharedPreferences mPreferences;
     private String scoreInput;
+    private ListView mListView;
 
 
     @Override
@@ -29,39 +37,30 @@ public class ScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
-        mSharedPreferences = getPreferences(MODE_PRIVATE);
-
-        mFstScore = findViewById(R.id.activity_score_result1_txt);
+        mListView = findViewById(R.id.list_view);
         mBtnName = findViewById(R.id.activity_score_sortName_btn);
         mBtnScore = findViewById(R.id.activity_score_sortScore_btn);
 
-        //Find how to pick and store score and name
-//        mName = mSharedPreferences.getString(PREF_KEY_FIRSTNAME, null);
-        mScore = mSharedPreferences.getInt(PREF_KEY_SCORE, 0);
+        List<ItemRowScore> itemRowScoreList = new ArrayList<ItemRowScore>();
+        ScoreAdapter adapter = new ScoreAdapter(this, itemRowScoreList);
+        mListView.setAdapter(adapter);
 
-        scoreInput = "1st - " + mName + " " + mScore + " points";
-        mFstScore.setText(scoreInput);
+        itemRowScoreList.add(new ItemRowScore(1, "pseudo", "score"));
     }
 
     //Methods
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (GAME_ACTIVITY_ID == requestCode && RESULT_OK == resultCode) {
-            //Fetch the score from the Intent
-            int score = data.getIntExtra(GameActivity.BUNDLE_EXTRA_SCORE, 0);
-            String name = data.getStringExtra(MainActivity.PREF_KEY_FIRSTNAME);
-            //Stock the score in shared preferences
-            mSharedPreferences.edit().putInt(PREF_KEY_SCORE, score).apply();
-//            mSharedPreferences.edit().putString(PREF_KEY_FIRSTNAME, name).apply();
-        }
-    }
+/*TODO:
+  ajouter les deux boutons de tri programmaticallement
+  ajouter le tri ascendant
+* récupérer le score du joueur et son nom
+* Sauvegarder les infos à chaque fin de partie de la Game Activity
+* Retourner à la page d'accueil et non pas à la game Activity lorsque sur la page des scores
+* Penser à bien charger les data dans la page Score à son ouverture
+* Limiter le nombre de ligne à 5 maximum
+* Remplacer la ligne la moins bonne
+* Ajouter une date de score
+* Remanier le layout des items
+* */
+
+
 }
-// Cut the problem :
-//First we need to access the score and the name information
-//
-//Two we need to storage the name and the score of the current player anytime he plays
-//The score must be stored even if the application is shutdown
-//We must limit the number of scores to five lines
-//Every time you outbounded that number of five replace the less score among the list or do not store the score
-//if there are less  than 5 scores stored inside the game then make sure that the line without data dont't appear on the screen
-//We must sort the list of score

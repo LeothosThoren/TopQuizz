@@ -2,7 +2,6 @@ package com.leothosthoren.topquizz.controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -108,6 +107,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 mEnableTouchEvents = true;
                 if (--mNumberOfQuestions == 0) {
                     //If it's last question End of the game
+                    view.setBackgroundColor(0xFFFFFFFF);
                     endGame();
                     //Else display an another question
                 } else {
@@ -130,7 +130,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Bien joué !")
-                .setMessage("Votre score est de " + mScore)
+                .setMessage("Ton score est de " + mScore + " point(s)")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -220,43 +220,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 question19,
                 question20,
                 question21));
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        System.out.println("GameActivity::onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        System.out.println("GameActivity::onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        System.out.println("GameActivity::onPause");
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        System.out.println("GameActivity::onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        System.out.println("GameActivity::onDestroy");
     }
 }
 
