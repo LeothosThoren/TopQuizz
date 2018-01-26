@@ -25,8 +25,6 @@ public class ItemRowScore {
     @Override
     public String toString() {
         return
-                "Nom ='" + mPseudo + '\'' +
-                        ", Score ='" + mScore + '\'' +
-                        '}';
+                " ==> Nom = " + mPseudo +"       "+" ==> Score = " + mScore;
     }
 }

@@ -31,8 +31,8 @@ public class ScoreAdapter extends ArrayAdapter<ItemRowScore> {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_score, parent, false);
-            //Here we handle the height of every item in the score activity, as we have 5 item we subdivide equally
-            convertView.getLayoutParams().height = parent.getHeight() / 5;
+//            //Here we handle the height of every item in the score activity, as we have 5 item we subdivide equally
+//            convertView.getLayoutParams().height = parent.getHeight() ;
         }
 
         //Her we define the real adapter of the view
