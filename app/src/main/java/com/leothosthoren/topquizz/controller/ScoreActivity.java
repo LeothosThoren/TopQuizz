@@ -3,20 +3,20 @@ package com.leothosthoren.topquizz.controller;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.leothosthoren.topquizz.R;
 import com.leothosthoren.topquizz.model.ItemRowScore;
+import com.leothosthoren.topquizz.model.ScoreData;
 import com.leothosthoren.topquizz.model.User;
 import com.leothosthoren.topquizz.view.ScoreAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
-import static com.leothosthoren.topquizz.controller.MainActivity.PREF_KEY_FIRSTNAME;
-import static com.leothosthoren.topquizz.controller.MainActivity.PREF_KEY_SCORE;
+import static com.leothosthoren.topquizz.model.ScoreData.mItemRowScores;
 
 public class ScoreActivity extends AppCompatActivity {
 
@@ -41,22 +41,32 @@ public class ScoreActivity extends AppCompatActivity {
         mBtnName = findViewById(R.id.activity_score_sortName_btn);
         mBtnScore = findViewById(R.id.activity_score_sortScore_btn);
 
-        List<ItemRowScore> itemRowScoreList = new ArrayList<ItemRowScore>();
-        ScoreAdapter adapter = new ScoreAdapter(this, itemRowScoreList);
+        ScoreData.loadData(this);
+        ScoreAdapter adapter = new ScoreAdapter(this, mItemRowScores);
         mListView.setAdapter(adapter);
 
-        itemRowScoreList.add(new ItemRowScore(1, "pseudo", "score"));
+
+        mBtnName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //sort by name
+                Collections.sort(mItemRowScores, Collections.<ItemRowScore>reverseOrder());
+            }
+        });
+
+        mBtnScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //sort by score
+            }
+        });
     }
 
     //Methods
+
+
 /*TODO:
-  ajouter les deux boutons de tri programmaticallement
   ajouter le tri ascendant
-* récupérer le score du joueur et son nom
-* Sauvegarder les infos à chaque fin de partie de la Game Activity
-* Retourner à la page d'accueil et non pas à la game Activity lorsque sur la page des scores
-* Penser à bien charger les data dans la page Score à son ouverture
-* Limiter le nombre de ligne à 5 maximum
 * Remplacer la ligne la moins bonne
 * Ajouter une date de score
 * Remanier le layout des items

@@ -14,6 +14,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Sofiane M. alias Leothos Thoren on 25/01/2018
+ * This class is using Shared preferences and Gson dependencies
+ * It's useful to separate the method which save and load the data.
+ * By overriding them you can use them every where in your app
+ * And there is a little extra to clear the Data
  */
 public class ScoreData {
 

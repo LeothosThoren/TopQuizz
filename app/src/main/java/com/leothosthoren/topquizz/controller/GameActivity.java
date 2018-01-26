@@ -42,15 +42,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        System.out.println("GameActivity::onCreate");
-
         mQuestionBank = this.generateQuestions();
 
         if (savedInstanceState != null) {
             mScore = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
             mNumberOfQuestions = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
         } else {
-            mNumberOfQuestions = 4;
+            mNumberOfQuestions = 3;
             mScore = 0;
         }
 
@@ -101,11 +99,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //The button question are disable 2 seconds until the toast text has not disapeared
         mEnableTouchEvents = false;
 
+        //We hold few second before going to the next question (same time as the toast text duration)
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 mEnableTouchEvents = true;
-                if (--mNumberOfQuestions == 0) {
+                //decrement number of question
+                --mNumberOfQuestions;
+                if (mNumberOfQuestions == 0) {
                     //If it's last question End of the game
                     view.setBackgroundColor(0xFFFFFFFF);
                     endGame();

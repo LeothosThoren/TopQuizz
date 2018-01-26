@@ -15,9 +15,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.leothosthoren.topquizz.R;
+import com.leothosthoren.topquizz.model.ItemRowScore;
+import com.leothosthoren.topquizz.model.ScoreData;
 import com.leothosthoren.topquizz.model.User;
 
 import static com.leothosthoren.topquizz.controller.GameActivity.BUNDLE_EXTRA_SCORE;
+import static com.leothosthoren.topquizz.model.ScoreData.mItemRowScores;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,15 +54,14 @@ public class MainActivity extends AppCompatActivity {
         mScoreButton = (Button) findViewById(R.id.activity_main_score_btn);
         mQuitButton = (Button) findViewById(R.id.activity_main_quit_btn);
 
-        /*
-        * Button is not valid at start*/
-        mScoreButton.setVisibility(View.INVISIBLE);
+        //Data is loaded whe, application start
+        ScoreData.loadData(this);
 
         /*this method check if user changer is Edit text*/
         mNameInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                mPlayButton.setEnabled(false);
+
             }
 
             @Override
@@ -82,25 +84,27 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
-                //This here where we handle the access to the Score view
-                mScoreButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //When user click on score button
-                        mPreferences.edit().putString(PREF_KEY_FIRSTNAME, mUser.getFirstName()).apply();
-
-                        Intent scoreActivity = new Intent(MainActivity.this, ScoreActivity.class);
-                        startActivityForResult(scoreActivity, SCORE_ACTIVITY_ID);
-                    }
-                });
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 mPlayButton.setEnabled(true);
 
+            }
+
+        });
+
+         /*
+        * Button score is not valid at start when none data is stored*/
+        if (mItemRowScores.size() == 0)
+            mScoreButton.setVisibility(View.GONE);
+
+//        This here where we handle the access to the Score view
+        mScoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent scoreActivity = new Intent(MainActivity.this, ScoreActivity.class);
+                startActivityForResult(scoreActivity, SCORE_ACTIVITY_ID);
             }
         });
 
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Quitter le jeu")
-                .setMessage("Êtes-vous sûr ?")
+                .setMessage("Êtes-tu sûr ?")
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -140,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 finish();
-                                System.exit(0);
+                                //This allow to kil the application efficiently (but we keep all the data saved)
+                                System.exit(RESULT_CANCELED);
                             }
                         }, 1000);
                     }
@@ -167,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void greetUser() {
         String firstname = mPreferences.getString(PREF_KEY_FIRSTNAME, null);
 
@@ -176,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
             String fulltext = "Bon retour parmi nous, " + firstname
                     + "!\nTon dernier score était de " + score
                     + ", feras-tu mieux la prochaine fois ?";
+
+            scoreHandler(firstname, score);
+
             mGreetingText.setText(fulltext);
             mNameInput.setText(firstname);
             mNameInput.setSelection(firstname.length());
@@ -183,4 +192,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void scoreHandler(String name, int score) {
+        //Here we avoid to put more than 5 items on the screen's device
+        if (mItemRowScores.size() == 5)
+            mItemRowScores.remove(0);
+
+        //Here we had the new name and score of the game every time the user go back to the menu automatically
+        mItemRowScores.add(new ItemRowScore(name, String.valueOf(score)));
+        //Here the data is saved (Look to Score data class in the model folder)
+        ScoreData.saveData(this);
+    }
 }
