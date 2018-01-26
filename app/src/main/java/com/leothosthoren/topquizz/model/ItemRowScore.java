@@ -21,4 +21,12 @@ public class ItemRowScore {
     public String getScore() {
         return mScore;
     }
+
+    @Override
+    public String toString() {
+        return
+                "Nom ='" + mPseudo + '\'' +
+                        ", Score ='" + mScore + '\'' +
+                        '}';
+    }
 }

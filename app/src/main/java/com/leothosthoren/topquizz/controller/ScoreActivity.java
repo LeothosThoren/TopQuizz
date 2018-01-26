@@ -14,7 +14,9 @@ import com.leothosthoren.topquizz.model.ScoreData;
 import com.leothosthoren.topquizz.model.User;
 import com.leothosthoren.topquizz.view.ScoreAdapter;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 
 import static com.leothosthoren.topquizz.model.ScoreData.mItemRowScores;
 
@@ -42,7 +44,7 @@ public class ScoreActivity extends AppCompatActivity {
         mBtnScore = findViewById(R.id.activity_score_sortScore_btn);
 
         ScoreData.loadData(this);
-        ScoreAdapter adapter = new ScoreAdapter(this, mItemRowScores);
+        final ScoreAdapter adapter = new ScoreAdapter(this, mItemRowScores);
         mListView.setAdapter(adapter);
 
 
@@ -50,7 +52,8 @@ public class ScoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //sort by name
-                Collections.sort(mItemRowScores, Collections.<ItemRowScore>reverseOrder());
+                Collections.sort(mItemRowScores, ComparatorNom);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -58,18 +61,34 @@ public class ScoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //sort by score
+                Collections.sort(mItemRowScores, ComparatorScore);
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
     //Methods
+    public static Comparator<ItemRowScore> ComparatorNom = new Comparator<ItemRowScore>() {
+
+        @Override
+        public int compare(ItemRowScore e1, ItemRowScore e2) {
+            return e1.getPseudo().compareTo(e2.getPseudo());
+        }
+    };
+
+    public static Comparator<ItemRowScore> ComparatorScore = new Comparator<ItemRowScore>() {
+
+        @Override
+        public int compare(ItemRowScore e1, ItemRowScore e2) {
+            return e1.getScore().compareTo(e2.getScore());
+        }
+    };
 
 
 /*TODO:
   ajouter le tri ascendant
 * Remplacer la ligne la moins bonne
 * Ajouter une date de score
-* Remanier le layout des items
 * */
 
 
