@@ -19,6 +19,10 @@ import com.leothosthoren.topquizz.model.ItemRowScore;
 import com.leothosthoren.topquizz.model.ScoreData;
 import com.leothosthoren.topquizz.model.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import static com.leothosthoren.topquizz.controller.GameActivity.BUNDLE_EXTRA_SCORE;
 import static com.leothosthoren.topquizz.model.ScoreData.mItemRowScores;
 
@@ -28,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
     public static final int SCORE_ACTIVITY_ID = 24;
     public static final String PREF_KEY_SCORE = "PKS";
     public static final String PREF_KEY_FIRSTNAME = "PKF";
-    public static final String BUNDLE_EXTRA_NAME = "BEN";
+
+    //Here we handle a date format to show it on the items
+    Date now = new Date();
+    SimpleDateFormat sfd = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.FRANCE);
+    String date = sfd.format(now);
+
     private TextView mGreetingText;
     private EditText mNameInput;
     private Button mPlayButton;
@@ -183,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     + "!\nTon dernier score était de " + score
                     + ", feras-tu mieux la prochaine fois ?";
 
+            //This is where we can store both name and score after the game is over
             scoreHandler(firstname, score);
 
             mGreetingText.setText(fulltext);
@@ -198,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             mItemRowScores.remove(0);
 
         //Here we had the new name and score of the game every time the user go back to the menu automatically
-        mItemRowScores.add(new ItemRowScore(name, String.valueOf(score)));
+        mItemRowScores.add(new ItemRowScore(name, String.valueOf(score), date));
         //Here the data is saved (Look to Score data class in the model folder)
         ScoreData.saveData(this);
     }

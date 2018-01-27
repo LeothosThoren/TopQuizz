@@ -30,9 +30,10 @@ public class ScoreActivity extends AppCompatActivity {
 
         @Override
         public int compare(ItemRowScore e1, ItemRowScore e2) {
-            return e1.getScore().compareTo(e2.getScore());
+            return e2.getScore().compareTo(e1.getScore());
         }
     };
+
     private ImageButton mBtnName;
     private ImageButton mBtnScore;
     private ImageButton mBtnDelete;
@@ -80,11 +81,5 @@ public class ScoreActivity extends AppCompatActivity {
             }
         });
     }
-
-
-/*TODO:
-* Ajouter une date de score
-* */
-
 
 }

@@ -48,7 +48,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             mScore = savedInstanceState.getInt(BUNDLE_STATE_SCORE);
             mNumberOfQuestions = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
         } else {
-            mNumberOfQuestions = 3;
+            mNumberOfQuestions = 6;
             mScore = 0;
         }
 

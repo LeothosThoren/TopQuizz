@@ -8,10 +8,12 @@ package com.leothosthoren.topquizz.model;
 public class ItemRowScore {
     private String mPseudo;
     private String mScore;
+    private String mDate;
 
-    public ItemRowScore(String pseudo, String score) {
+    public ItemRowScore(String pseudo, String score, String date) {
         mPseudo = pseudo;
         mScore = score;
+        mDate = date;
     }
 
     public String getPseudo() {
@@ -22,9 +24,8 @@ public class ItemRowScore {
         return mScore;
     }
 
-    @Override
-    public String toString() {
-        return
-                " ==> Nom = " + mPseudo +"       "+" ==> Score = " + mScore;
+
+    public String getDate() {
+        return mDate;
     }
 }
